@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import StartPage from '../component/start_page.js'
+import StartPage from '../component/start_page.js';
 
 export default class QuizContainer extends Component {
   constructor(){
@@ -8,11 +8,17 @@ export default class QuizContainer extends Component {
       gameStarted: false
     }
   }
+  startGame = () => {
+    this.setState({
+      gameStarted: true
+    })
+  }
+
   render(){
     return(
-      <React.Fragment>
-        <StartPage />
-      </React.Fragment>
+      <div>
+        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : null}
+      </div>
     )
   }
 }

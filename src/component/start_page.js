@@ -1,11 +1,12 @@
 import React from 'react';
+import {Button, Header} from 'semantic-ui-react';
 
 const StartPage = (props) => { return(
-  <React.Fragment>
-    <h1>Welcome To Survivor Quest!</h1>
-    <button type="button">Start Game</button>
-    <button type="button">External Resources</button>
-  </React.Fragment>
+  <div>
+    <Header as='h1'>Welcome To Survivor Quest!</Header>
+    <Button onClick={props.startGame} type="button">Start Quiz</Button>
+    <Button type="button">External Resources</Button>
+  </div>
 )}
 
 export default StartPage;
