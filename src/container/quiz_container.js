@@ -8,7 +8,10 @@ export default class QuizContainer extends Component {
     this.state = {
       gameStarted: false,
       questions: [],
-      answers: []
+      answers: [],
+      users: [],
+      scores: [],
+      currentUser: null
     }
   }
   startGame = () => {
@@ -33,16 +36,34 @@ export default class QuizContainer extends Component {
     }))
   }
 
+  scoreFetcher = () => {
+    fetch('http://localhost:3000/api/v1/scores')
+    .then(res => res.json())
+    .then(json => this.setState({
+      scores: json
+    }))
+  }
+
+  userFetcher = () => {
+    fetch('http://localhost:3000/api/v1/users')
+    .then(res => res.json())
+    .then(json => this.setState({
+      users: json
+    }))
+  }
+
   componentDidMount(){
     this.questionFetcher()
     this.answerFetcher()
+    this.scoreFetcher()
+    this.userFetcher()
 
   }
 
   render(){
     return(
       <div>
-        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : <Quiz questions={this.state.questions} answers={this.state.answers}/>}
+        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : <Quiz users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>}
       </div>
     )
   }
