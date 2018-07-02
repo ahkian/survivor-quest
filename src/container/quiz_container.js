@@ -50,7 +50,8 @@ export default class QuizContainer extends Component {
     fetch('http://localhost:3000/api/v1/users')
     .then(res => res.json())
     .then(json => this.setState({
-      users: json
+      users: json,
+      currentUser: this.state.userNameBuffer
     }))
   }
 
@@ -67,13 +68,17 @@ export default class QuizContainer extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }, body: JSON.stringify({
-        name: this.state.userNameBuffer
+        user: {name: this.state.userNameBuffer}
       })
     })
-    .then(res => res.json)
-    .then(this.setState({
-      currentUser: this.state.userNameBuffer
-    }))
+    .then(res => res.json())
+    .then(json => {
+      this.userFetcher()
+    })
+    // .then(this.userFetcher(), console.log(this.state.currentUser, "2"))
+    // .then(this.setState({
+    //   currentUser: this.state.userNameBuffer
+    // }), console.log(this.state.currentUser, "3"))
   }
 
 
@@ -81,7 +86,6 @@ export default class QuizContainer extends Component {
     this.questionFetcher()
     this.answerFetcher()
     this.scoreFetcher()
-    this.userFetcher()
 
   }
 
