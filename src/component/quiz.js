@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { Header, Button, Input, Radio, Select, Form, Dropdown } from 'semantic-ui-react'
+import { Header, Button, Radio, Form, Dropdown } from 'semantic-ui-react'
 
 export default class Quiz extends Component {
   constructor(){
     super()
     this.state = {
-      lives: 10,
+      lives: 5,
       question_number: 1,
       selectedQuestion: "",
       selectedAnswers: [],
@@ -35,21 +35,33 @@ export default class Quiz extends Component {
   }
 
   submitHandler = (e) => {
-    console.log(this.state.value)
+    if (this.state.question_number < 10 && this.state.lives > 0){
+        this.setState({
+          question_number: this.state.question_number + 1
+        })
+        const wantedAnswer = this.state.selectedAnswers.find(ans => {
+          return ans.content === this.state.value
+        })
+        if (!wantedAnswer.is_correct){
+          this.setState({
+            lives: this.state.lives - 1
+          })
+        }
+      this.questionPicker()
+      this.answersPicker()
+    } else {
+      window.alert(`Game Over! You ${this.state.lives > 0 ? "survived with " + this.state.lives + " lives!" : "died!"}`)
+      window.location.reload()
+    }
   }
 
   changeHandler = (e) => {
-
     this.setState({
       value: e.target.innerText
-    }, console.log("The value is ",this.state.value, "the target is ", e.target))
-  }
-
-  formattedAnswers = () => {
-    this.state.selectedAnswers.map(ans => {
-      return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
     })
   }
+
+
 
   componentDidMount(){
     this.questionPicker()
@@ -62,13 +74,19 @@ export default class Quiz extends Component {
       <React.Fragment>
         <Form>
           <Form.Group>
-            <Header as='h3'>{this.state.selectedQuestion.content}</Header>
-            <Dropdown onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
-              return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
-            })}/>
+            <div style = {{
+                paddingTop: '50px',
+                paddingLeft: '70px'
+            }}>
+              <Header as='h3'>{this.state.selectedQuestion.content}</Header>
+              <Dropdown style={{verticalAlign: 'middle', paddingBottom: '30px'}} onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
+                return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
+              })}/>
+            </div>
           </Form.Group>
-          <Form.Field onClick={this.submitHandler} control={Button}>Submit</Form.Field>
+          <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
         </Form>
+        <Header color="red" as='h1'>Lives: {this.state.lives}</Header>
       </React.Fragment>
     )
   }
