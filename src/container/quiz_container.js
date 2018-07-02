@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import StartPage from '../component/start_page.js';
 import Quiz from '../component/quiz.js'
+import Overlay from '../component/overlay.js'
 
 export default class QuizContainer extends Component {
   constructor(){
@@ -8,7 +9,11 @@ export default class QuizContainer extends Component {
     this.state = {
       gameStarted: false,
       questions: [],
-      answers: []
+      answers: [],
+      users: [],
+      scores: [],
+      currentUser: null,
+      userNameBuffer: null
     }
   }
   startGame = () => {
@@ -33,16 +38,61 @@ export default class QuizContainer extends Component {
     }))
   }
 
+  scoreFetcher = () => {
+    fetch('http://localhost:3000/api/v1/scores')
+    .then(res => res.json())
+    .then(json => this.setState({
+      scores: json
+    }))
+  }
+
+  userFetcher = () => {
+    fetch('http://localhost:3000/api/v1/users')
+    .then(res => res.json())
+    .then(json => this.setState({
+      users: json,
+      currentUser: this.state.userNameBuffer
+    }))
+  }
+
+  currentUserName = (e) => {
+    this.setState({
+      userNameBuffer: e.target.value
+    })
+  }
+
+  setCurrentUser = () => {
+    fetch('http://localhost:3000/api/v1/users', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }, body: JSON.stringify({
+        user: {name: this.state.userNameBuffer}
+      })
+    })
+    .then(res => res.json())
+    .then(json => {
+      this.userFetcher()
+    })
+    // .then(this.userFetcher(), console.log(this.state.currentUser, "2"))
+    // .then(this.setState({
+    //   currentUser: this.state.userNameBuffer
+    // }), console.log(this.state.currentUser, "3"))
+  }
+
+
   componentDidMount(){
     this.questionFetcher()
     this.answerFetcher()
+    this.scoreFetcher()
 
   }
 
   render(){
     return(
       <div>
-        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : <Quiz questions={this.state.questions} answers={this.state.answers}/>}
+        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : (!this.state.currentUser ? <Overlay currentUserName={this.currentUserName} setCurrentUser={this.setCurrentUser} /> : <Quiz currentUser={this.state.currentUser} users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>)}
       </div>
     )
   }

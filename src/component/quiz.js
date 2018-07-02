@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Header, Button, Radio, Form, Dropdown } from 'semantic-ui-react'
+import EndPage from './end_page.js'
 
 export default class Quiz extends Component {
   constructor(){
@@ -35,7 +36,7 @@ export default class Quiz extends Component {
   }
 
   submitHandler = (e) => {
-    if (this.state.question_number < 10 && this.state.lives > 0){
+    if (this.state.question_number <= 10 && this.state.lives > 0){
         this.setState({
           question_number: this.state.question_number + 1
         })
@@ -50,8 +51,8 @@ export default class Quiz extends Component {
       this.questionPicker()
       this.answersPicker()
     } else {
-      window.alert(`Game Over! You ${this.state.lives > 0 ? "survived with " + this.state.lives + " lives!" : "died!"}`)
-      window.location.reload()
+      // window.alert(`Game Over! You ${this.state.lives > 0 ? "survived with " + this.state.lives + " lives!" : "died!"}`)
+      // window.location.reload()
     }
   }
 
@@ -71,6 +72,8 @@ export default class Quiz extends Component {
 
   render(){
     return(
+      <div>
+      {this.state.lives < 1 || this.state.question_number > 10 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
         <Form>
           <Form.Group>
@@ -87,7 +90,8 @@ export default class Quiz extends Component {
           <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
         </Form>
         <Header color="red" as='h1'>Lives: {this.state.lives}</Header>
-      </React.Fragment>
+      </React.Fragment>}
+      </div>
     )
   }
 }
