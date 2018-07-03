@@ -36,7 +36,7 @@ export default class Quiz extends Component {
   }
 
   submitHandler = (e) => {
-    if (this.state.question_number <= 10 && this.state.lives > 0){
+    if (this.state.question_number <= 11 && this.state.lives > 0){
         this.setState({
           question_number: this.state.question_number + 1
         })
@@ -50,7 +50,7 @@ export default class Quiz extends Component {
         }
       this.questionPicker()
       this.answersPicker()
-    } 
+    }
   }
 
   changeHandler = (e) => {
@@ -70,7 +70,7 @@ export default class Quiz extends Component {
   render(){
     return(
       <div>
-      {this.state.lives < 1 || this.state.question_number > 10 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
+      {this.state.lives < 1 || this.state.question_number > 11 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
         <Form>
           <Form.Group>
