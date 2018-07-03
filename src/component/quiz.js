@@ -50,10 +50,7 @@ export default class Quiz extends Component {
         }
       this.questionPicker()
       this.answersPicker()
-    } else {
-      // window.alert(`Game Over! You ${this.state.lives > 0 ? "survived with " + this.state.lives + " lives!" : "died!"}`)
-      // window.location.reload()
-    }
+    } 
   }
 
   changeHandler = (e) => {
