@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Header, Table, Label } from 'semantic-ui-react';
+import { Header, Table, Label, Button } from 'semantic-ui-react';
 
 export default class EndPage extends Component {
   constructor(){
     super()
+    this.state = {
+      ordered_scores: []
+    }
+  }
 
+  handleClick = () => {
+    window.location.reload()
   }
 
   sendScore = () => {
@@ -25,8 +31,17 @@ export default class EndPage extends Component {
     })
   }
 
+  orderScores = () => {
+    this.setState({
+      ordered_scores: this.props.scores.sort((a, b) => {
+        return b.points - a.points
+      })
+    })
+  }
+
   componentDidMount(){
     this.sendScore()
+    this.orderScores()
   }
 
   render(){
@@ -42,7 +57,7 @@ export default class EndPage extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.scores.map(score => {
+            {this.state.ordered_scores.map(score => {
               let username = this.props.users.find(user => {
                 return user.id === score.user_id
               })
@@ -53,6 +68,7 @@ export default class EndPage extends Component {
             })}
           </Table.Body>
         </Table>
+        <Button onClick={this.handleClick}>Return To Main Menu</Button>
       </React.Fragment>
     )
   }

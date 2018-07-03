@@ -81,7 +81,7 @@ export default class Quiz extends Component {
                 paddingTop: '50px',
                 paddingLeft: '70px'
             }}>
-              <Header as='h3'>{this.state.selectedQuestion.content}</Header>
+              <Header class="ui center aligned header" as='h3'>{this.state.selectedQuestion.content}</Header>
               <Dropdown style={{verticalAlign: 'middle', paddingBottom: '30px'}} onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
                 return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
               })}/>
