@@ -32,6 +32,8 @@ export default class EndPage extends Component {
   }
 
   orderScores = () => {
+    this.props.scores.push({points: this.props.lives * 100, user_id:this.props.users.find(user => {
+      return user.name === this.props.currentUser}).id})
     this.setState({
       ordered_scores: this.props.scores.sort((a, b) => {
         return b.points - a.points
@@ -48,9 +50,12 @@ export default class EndPage extends Component {
     return(
       <React.Fragment>
         <Header as='h1' style={{color: "red"}}>Game Over</Header>
-        {this.props.lives > 0 ? <Header as='h3'>Congratulations on surviving! You won with {this.props.lives * 100} points!</Header> : <Header as='h3'>"You lost all of your lives!"</Header>}
+        {this.props.lives > 0 ? <Header style={{color: "green"}} as='h3'>Congratulations on surviving! You won with {this.props.lives * 100} points!</Header> : <Header style={{color: "red"}} as='h3'>"You lost all of your lives!"</Header>}
         <Table>
           <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell className="ui center aligned text" colSpan='2'>Leaderboard</Table.HeaderCell>
+            </Table.Row>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Points</Table.HeaderCell>
@@ -61,7 +66,7 @@ export default class EndPage extends Component {
               let username = this.props.users.find(user => {
                 return user.id === score.user_id
               })
-              return <Table.Row key={score.id}>
+              return <Table.Row color={score.points > 0 ? 'green' : 'red'} key={score.id}>
                 <Table.Cell>{username.name}</Table.Cell>
                 <Table.Cell>{score.points}</Table.Cell>
               </Table.Row>

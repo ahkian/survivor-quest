@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Header, Button, Radio, Form, Dropdown } from 'semantic-ui-react'
+import { Header, Button, Radio, Form, Dropdown, Grid } from 'semantic-ui-react'
 import EndPage from './end_page.js'
 
 export default class Quiz extends Component {
@@ -72,20 +72,21 @@ export default class Quiz extends Component {
       <div>
       {this.state.lives < 1 || this.state.question_number > 11 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
-        <Form>
+        <Grid centered>
+        <Form >
           <Form.Group>
             <div style = {{
-                paddingTop: '50px',
-                paddingLeft: '70px'
+                paddingTop: '50px'
             }}>
-              <Header class="ui center aligned header" as='h3'>{this.state.selectedQuestion.content}</Header>
-              <Dropdown style={{verticalAlign: 'middle', paddingBottom: '30px'}} onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
+              <Header as='h3'>{this.state.selectedQuestion.content}</Header>
+              <Dropdown onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
                 return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
               })}/>
             </div>
           </Form.Group>
           <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
         </Form>
+        </Grid>
         <Header color="red" as='h1'>Lives: {this.state.lives}</Header>
       </React.Fragment>}
       </div>
