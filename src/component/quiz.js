@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Header, Button, Radio, Form, Dropdown, Grid } from 'semantic-ui-react'
-import EndPage from './end_page.js'
+import { Header, Button, Radio, Form, Dropdown, Grid } from 'semantic-ui-react';
+import EndPage from './end_page.js';
+
 
 export default class Quiz extends Component {
   constructor(){
