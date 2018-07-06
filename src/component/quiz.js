@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Header, Button, Radio, Form, Dropdown, Grid } from 'semantic-ui-react'
-import EndPage from './end_page.js'
+import { Header, Button, Radio, Form, Dropdown, Grid } from 'semantic-ui-react';
+import EndPage from './end_page.js';
+import Game from './game.js';
 
 export default class Quiz extends Component {
   constructor(){
@@ -36,7 +37,7 @@ export default class Quiz extends Component {
   }
 
   submitHandler = (e) => {
-    if (this.state.question_number <= 11 && this.state.lives > 0){
+    if (this.state.question_number <= 12 && this.state.lives > 0){
         this.setState({
           question_number: this.state.question_number + 1
         })
@@ -70,22 +71,24 @@ export default class Quiz extends Component {
   render(){
     return(
       <div>
-      {this.state.lives < 1 || this.state.question_number > 11 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
+      {this.state.lives < 1 || this.state.question_number > 12 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
         <Grid centered>
-        <Form >
-          <Form.Group>
-            <div style = {{
-                paddingTop: '50px'
-            }}>
-              <Header as='h3'>{this.state.selectedQuestion.content}</Header>
-              <Dropdown onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
-                return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
-              })}/>
-            </div>
-          </Form.Group>
-          <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
-        </Form>
+          { this.state.selectedAnswers.content === [] ? <Game lives={this.state.lives} /> :
+          (<Form >
+            <Form.Group>
+              <div style = {{
+                  paddingTop: '50px'
+              }}>
+                <Header as='h3'>{this.state.selectedQuestion.content}</Header>
+                <Dropdown onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
+                  return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
+                })}/>
+              </div>
+            </Form.Group>
+            <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
+          </Form>)
+        }
         </Grid>
         <Header color="red" as='h1'>Lives: {this.state.lives}</Header>
       </React.Fragment>}
