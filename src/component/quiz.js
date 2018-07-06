@@ -60,6 +60,18 @@ export default class Quiz extends Component {
     })
   }
 
+  clickHandler = () =>  {
+    this.setState({
+      question_number: this.state.question_number + 1
+    })
+  }
+
+  hoverHandler=()=>{
+    this.setState({
+      lives: this.state.lives - 1
+    })
+  }
+
 
 
   componentDidMount(){
@@ -73,9 +85,10 @@ export default class Quiz extends Component {
       <div>
       {this.state.lives < 1 || this.state.question_number > 12 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
+
+      { this.state.question_number > 11 ? <Game clickHandler={this.clickHandler} hoverHandler={this.hoverHandler} lives={this.state.lives} selectedQuestion={this.state.selectedQuestion} /> :
         <Grid centered>
-          { this.state.selectedAnswers.content === [] ? <Game lives={this.state.lives} /> :
-          (<Form >
+          <Form >
             <Form.Group>
               <div style = {{
                   paddingTop: '50px'
@@ -87,9 +100,10 @@ export default class Quiz extends Component {
               </div>
             </Form.Group>
             <Form.Field style={{verticalAlign: 'middle'}} onClick={this.submitHandler} control={Button}>Submit</Form.Field>
-          </Form>)
-        }
+          </Form>
         </Grid>
+      }
+
         <Header color="red" as='h1'>Lives: {this.state.lives}</Header>
       </React.Fragment>}
       </div>
