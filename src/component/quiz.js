@@ -68,7 +68,8 @@ export default class Quiz extends Component {
 
   hoverHandler=()=>{
     this.setState({
-      lives: this.state.lives - 1
+      lives: this.state.lives - 1,
+      question_number: this.state.question_number + 1
     })
   }
 
@@ -83,10 +84,10 @@ export default class Quiz extends Component {
   render(){
     return(
       <div>
-      {this.state.lives < 1 || this.state.question_number > 12 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
+      {this.state.lives < 1 || this.state.question_number > 13 ? <EndPage currentUser={this.props.currentUser} users={this.props.users} scores={this.props.scores} lives={this.state.lives}/>:
       <React.Fragment>
 
-      { this.state.question_number > 11 ? <Game clickHandler={this.clickHandler} hoverHandler={this.hoverHandler} lives={this.state.lives} selectedQuestion={this.state.selectedQuestion} /> :
+      { this.state.question_number > 11 ? <Game questionNumber={this.state.question_number} clickHandler={this.clickHandler} hoverHandler={this.hoverHandler} lives={this.state.lives} selectedQuestion={this.state.selectedQuestion} /> :
         <Grid centered>
           <Form >
             <Form.Group>
