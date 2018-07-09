@@ -12,4 +12,7 @@ export default class Game extends Component {
 
   render(){
     return(
-          (this.props.questionNumber > 12) ? <Game3 clickHandler={this.props.clickHandler} hoverHandler={this.props.hoverHandler} /> : <Game2 clickHandler={this.props.clickHandler} hoverHandler={this.props.hoverHandler} />
+          (this.props.questionNumber > 11) ? <Game3 clickHandler={this.props.clickHandler} hoverHandler={this.props.hoverHandler} /> : <Game2 clickHandler={this.props.clickHandler} hoverHandler={this.props.hoverHandler} />
+      )
+    }
+}

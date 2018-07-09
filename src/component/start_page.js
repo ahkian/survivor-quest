@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Header} from 'semantic-ui-react';
+import '../start_page.css';
 
 const StartPage = (props) => { return(
   <div>

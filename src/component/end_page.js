@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Table, Label, Button } from 'semantic-ui-react';
+import { Header, Table, Label, Button, Grid } from 'semantic-ui-react';
 
 export default class EndPage extends Component {
   constructor(){
@@ -49,30 +49,32 @@ export default class EndPage extends Component {
   render(){
     return(
       <React.Fragment>
-        <Header as='h1' style={{color: "red"}}>Game Over</Header>
+        <Header as='h1'>Game Over</Header>
         {this.props.lives > 0 ? <Header style={{color: "green"}} as='h3'>Congratulations on surviving! You won with {this.props.lives * 100} points!</Header> : <Header style={{color: "red"}} as='h3'>"You lost all of your lives!"</Header>}
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell className="ui center aligned text" colSpan='2'>Leaderboard</Table.HeaderCell>
-            </Table.Row>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Points</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {this.state.ordered_scores.map(score => {
-              let username = this.props.users.find(user => {
-                return user.id === score.user_id
-              })
-              return <Table.Row color={score.points > 0 ? 'green' : 'red'} key={score.id}>
-                <Table.Cell>{username.name}</Table.Cell>
-                <Table.Cell>{score.points}</Table.Cell>
+        <Grid centered>
+          <Table compact style={{width: '50%'}}>
+            <Table.Header className="ui center aligned text">
+              <Table.Row className="ui center aligned text">
+                <Table.HeaderCell className="ui center aligned text" colSpan='2'>Leaderboard</Table.HeaderCell>
               </Table.Row>
-            })}
-          </Table.Body>
-        </Table>
+              <Table.Row className="ui center aligned text">
+                <Table.HeaderCell className="ui center aligned text">Name</Table.HeaderCell>
+                <Table.HeaderCell className="ui center aligned text">Points</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body className="ui center aligned text">
+              {this.state.ordered_scores.map(score => {
+                let username = this.props.users.find(user => {
+                  return user.id === score.user_id
+                })
+                return <Table.Row className="ui center aligned text" color={score.points > 0 ? 'green' : 'red'} key={score.id}>
+                  <Table.Cell className="ui center aligned text">{username.name}</Table.Cell>
+                  <Table.Cell className="ui center aligned text">{score.points}</Table.Cell>
+                </Table.Row>
+              })}
+            </Table.Body>
+          </Table>
+        </Grid>
         <Button onClick={this.handleClick}>Return To Main Menu</Button>
       </React.Fragment>
     )
