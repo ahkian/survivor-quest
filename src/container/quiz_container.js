@@ -92,7 +92,7 @@ export default class QuizContainer extends Component {
   render(){
     return(
       <div>
-        {!this.state.gameStarted ? <StartPage startGame={this.startGame} /> : (!this.state.currentUser ? <Overlay currentUserName={this.currentUserName} setCurrentUser={this.setCurrentUser} /> : <Quiz currentUser={this.state.currentUser} users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>)}
+        {!this.state.gameStarted ? <StartPage startGame={this.startGame} scores={this.state.scores} users={this.state.users}/> : (!this.state.currentUser ? <Overlay currentUserName={this.currentUserName} setCurrentUser={this.setCurrentUser} /> : <Quiz currentUser={this.state.currentUser} users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>)}
       </div>
     )
   }
