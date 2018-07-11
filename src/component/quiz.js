@@ -57,6 +57,9 @@ export default class Quiz extends Component {
         lives: this.state.lives - 1
       })
     }
+    this.setState({
+      value: null
+    })
     this.questionPicker()
     this.answersPicker()
   }
