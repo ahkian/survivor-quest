@@ -75,7 +75,9 @@ export default class EndPage extends Component {
             </Table.Body>
           </Table>
         </Grid>
-        <Button onClick={this.handleClick}>Return To Main Menu</Button>
+        <Grid centered>
+          <Button onClick={this.handleClick}>Return To Main Menu</Button>
+        </Grid>
       </React.Fragment>
     )
   }

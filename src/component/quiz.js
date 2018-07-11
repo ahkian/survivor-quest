@@ -11,7 +11,8 @@ export default class Quiz extends Component {
       question_number: 1,
       selectedQuestion: "",
       selectedAnswers: [],
-      value: null
+      value: null,
+      noAnswer: false
     }
   }
 
@@ -44,7 +45,9 @@ export default class Quiz extends Component {
           }, () => this.handleSubmit())
       }}
     else {
-      window.alert("You must choose an answer!")
+      this.setState({
+        noAnswer: true
+      })
     }
   }
 
@@ -99,12 +102,13 @@ export default class Quiz extends Component {
 
       { this.state.question_number > 10 ? <Game questionNumber={this.state.question_number} clickHandler={this.clickHandler} hoverHandler={this.hoverHandler} lives={this.state.lives} selectedQuestion={this.state.selectedQuestion} /> :
         <Grid centered>
-          <Form >
+          <Form>
             <Form.Group>
               <div style = {{
                   paddingTop: '50px'
               }}>
                 <Header as='h3'>{this.state.selectedQuestion.content}</Header>
+                {this.state.noAnswer ? <Header as="h3">You must select an answer!</Header>: null}
                 <Dropdown onChange={this.changeHandler} placeholder="Select an answer" text={this.state.value}options={this.state.selectedAnswers.map(ans => {
                   return {key: ans.id, is_correct: ans.is_correct.toString(), text: ans.content, id: ans.id}
                 })}/>
