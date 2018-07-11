@@ -37,10 +37,14 @@ export default class Quiz extends Component {
   }
 
   submitHandler = (e) => {
-    if (this.state.question_number <= 12 && this.state.lives > 0){
-        this.setState({
-          question_number: this.state.question_number + 1
-        }, () => this.handleSubmit())
+    if (this.state.value){
+      if (this.state.question_number <= 12 && this.state.lives > 0){
+          this.setState({
+            question_number: this.state.question_number + 1
+          }, () => this.handleSubmit())
+      }}
+    else {
+      window.alert("You must choose an answer!")
     }
   }
 
