@@ -5,11 +5,11 @@ export default class Leaderboard extends Component{
   constructor(){
     super()
     this.state = {
-      
+
     }
   }
 
-
+//Currently trying to order scores in start_page.js scores still undefined in props
 
 
   render(){

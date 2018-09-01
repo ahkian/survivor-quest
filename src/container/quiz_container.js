@@ -99,9 +99,9 @@ export default class QuizContainer extends Component {
 
 
   componentDidMount(){
+    this.scoreFetcher()
     this.questionFetcher()
     this.answerFetcher()
-    this.scoreFetcher()
   }
 
   render(){
