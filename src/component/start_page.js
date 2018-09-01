@@ -4,7 +4,8 @@ import '../start_page.css';
 import Leaderboard from '../leaderboard.js';
 
 
-const StartPage = (props) => { return(
+const StartPage = (props) => { props.orderedScores()
+   return(
   <div className="startpage">
     <Header as='h1'>Welcome To Survivor Quest!</Header>
     <Image inline onClick={props.startGame} src={require("../images/run-bear2.png")} />
