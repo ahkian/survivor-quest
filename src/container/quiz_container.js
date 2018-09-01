@@ -13,7 +13,9 @@ export default class QuizContainer extends Component {
       users: [],
       scores: [],
       currentUser: null,
-      userNameBuffer: null
+      userNameBuffer: null,
+      leaderboard: false,
+      ordered_scores: []
     }
   }
   startGame = () => {
@@ -61,6 +63,12 @@ export default class QuizContainer extends Component {
     })
   }
 
+  showLeaderBoard = () => {
+    this.setState({
+      leaderboard: !this.state.leaderboard
+    })
+  }
+
   setCurrentUser = () => {
     fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
@@ -81,18 +89,25 @@ export default class QuizContainer extends Component {
     // }), console.log(this.state.currentUser, "3"))
   }
 
+  orderScores = () => {
+    this.setState({
+      ordered_scores: this.props.scores.sort((a, b) => {
+        return b.points - a.points
+      })
+    })
+  }
+
 
   componentDidMount(){
     this.questionFetcher()
     this.answerFetcher()
     this.scoreFetcher()
-
   }
 
   render(){
     return(
       <div>
-        {!this.state.gameStarted ? <StartPage startGame={this.startGame} scores={this.state.scores} users={this.state.users}/> : (!this.state.currentUser ? <Overlay currentUserName={this.currentUserName} setCurrentUser={this.setCurrentUser} /> : <Quiz currentUser={this.state.currentUser} users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>)}
+        {!this.state.gameStarted ? <StartPage orderedScores={this.orderedScores} leaderboardFunction={this.showLeaderBoard} leaderboardState={this.state.leaderboard} startGame={this.startGame} scores={this.state.scores} users={this.state.users}/> : (!this.state.currentUser ? <Overlay currentUserName={this.currentUserName} setCurrentUser={this.setCurrentUser} /> : <Quiz currentUser={this.state.currentUser} users={this.state.users} scores={this.state.scores} questions={this.state.questions} answers={this.state.answers}/>)}
       </div>
     )
   }

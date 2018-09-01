@@ -5,25 +5,36 @@ export default class Leaderboard extends Component{
   constructor(){
     super()
     this.state = {
-      orderScores: null
+      
     }
   }
 
-  orderScores = () => {
-    this.setState({
-      ordered_scores: this.props.scores.sort((a, b) => {
-        return b.points - a.points
-      })
-    })
-  }
 
-  componentDidMount(){
-    this.orderScores()
-  }
+
 
   render(){
     return(
-      
+      <div className={this.state.hidden}>
+        <Table compact style={{width: '50%'}}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Score</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body className="ui center aligned text">
+            {this.props.ordered_scores.map(score => {
+              let username = this.props.users.find(user => {
+                return user.id === score.user_id
+              })
+              return <Table.Row className="ui center aligned text" color={score.points > 0 ? 'green' : 'red'} key={score.id}>
+                <Table.Cell className="ui center aligned text">{username.name}</Table.Cell>
+                <Table.Cell className="ui center aligned text">{score.points}</Table.Cell>
+              </Table.Row>
+            })}
+          </Table.Body>
+        </Table>
+      </div>
     )
   }
 }
