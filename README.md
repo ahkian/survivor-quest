@@ -9,6 +9,9 @@
 ### Installation 
 Clone this repo and the backend which can be found [here](https://github.com/ahkian/survivor-backend). When starting SurvivorQuest make sure you start the backend on port 3000. For the frontend run 'npm install && npm start' in your terminal.
 
+### Demo
+[![SurvivorQuest Demo](https://img.youtube.com/vi/Pm6nTeDLlPU/0.jpg)](https://youtu.be/Pm6nTeDLlPU)
+
 ### License
 Copyright 2018 Daniel Brazel
 
